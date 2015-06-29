@@ -68,9 +68,7 @@ public class FullscreenActivity extends Activity {
     private BeaconEventListener beaconSightingListener;
     private BeaconManager beaconManager;
 
-    private Integer previousRSSI;
-
-    private final int interval = 10;
+    private final int interval = 100;
     private Handler handler = new Handler();
 
     @Override
@@ -118,26 +116,11 @@ public class FullscreenActivity extends Activity {
                 Log.i("INFO", "Notification was clicked on");
             }
         };
+
         CommunicationManager.getInstance().addListener(communicationListener);
 
-        beaconSightingListener = new BeaconEventListener() {
-            @Override
-            public void onBeaconSighting(BeaconSighting sighting) {
-                Log.i("INFO", sighting.toString());
-                TextView fullscreenContent = (TextView) findViewById(R.id.fullscreen_content);
-
-                fullscreenContent.setText(sighting.getBeacon().getName() + "\n" + sighting.getRSSI());
-
-                previousRSSI = sighting.getRSSI();
-
-            }
-        };
-        beaconManager = new BeaconManager();
-        beaconManager.addListener(beaconSightingListener);
-
-        PlaceManager.getInstance().startMonitoring();
-        beaconManager.startListening();
-        CommunicationManager.getInstance().startReceivingCommunications();
+        GimbalRSSI gimbalRSSI = new GimbalRSSI();
+        gimbalRSSI.manageRSSI(this);
 
         setContentView(R.layout.activity_fullscreen);
 
@@ -213,7 +196,7 @@ public class FullscreenActivity extends Activity {
     private Runnable changeProgressBar = new Runnable(){
         @Override
         public void run() {
-            System.out.println("DRAWER: " + previousRSSI);
+            System.out.println("DRAWER: " + GimbalRSSI.previousRSSI);
             handler.postDelayed(this, interval);
         }
     };
