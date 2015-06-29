@@ -1,7 +1,5 @@
 package com.organic.projects.dwwd;
 
-import com.organic.projects.dwwd.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
@@ -12,19 +10,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.gimbal.android.Gimbal;
-import com.gimbal.android.PlaceManager;
-import com.gimbal.android.PlaceEventListener;
-import com.gimbal.android.Visit;
-
-import com.gimbal.android.CommunicationManager;
-import com.gimbal.android.CommunicationListener;
-import com.gimbal.android.Communication;
-import com.gimbal.android.Push;
-
 import com.gimbal.android.BeaconEventListener;
 import com.gimbal.android.BeaconManager;
 import com.gimbal.android.BeaconSighting;
+import com.gimbal.android.Communication;
+import com.gimbal.android.CommunicationListener;
+import com.gimbal.android.CommunicationManager;
+import com.gimbal.android.Gimbal;
+import com.gimbal.android.PlaceEventListener;
+import com.gimbal.android.PlaceManager;
+import com.gimbal.android.Push;
+import com.gimbal.android.Visit;
+import com.organic.projects.dwwd.util.SystemUiHider;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -70,6 +67,11 @@ public class FullscreenActivity extends Activity {
     private CommunicationListener communicationListener;
     private BeaconEventListener beaconSightingListener;
     private BeaconManager beaconManager;
+
+    private Integer previousRSSI;
+
+    private final int interval = 10;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,9 @@ public class FullscreenActivity extends Activity {
                 Log.i("INFO", sighting.toString());
                 TextView fullscreenContent = (TextView) findViewById(R.id.fullscreen_content);
 
-                fullscreenContent.setText(sighting.getBeacon().getName()+ "\n" + sighting.getRSSI());
+                fullscreenContent.setText(sighting.getBeacon().getName() + "\n" + sighting.getRSSI());
+
+                previousRSSI = sighting.getRSSI();
 
             }
         };
@@ -136,6 +140,8 @@ public class FullscreenActivity extends Activity {
         CommunicationManager.getInstance().startReceivingCommunications();
 
         setContentView(R.layout.activity_fullscreen);
+
+        handler.postDelayed(changeProgressBar, interval);
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
@@ -199,6 +205,19 @@ public class FullscreenActivity extends Activity {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
+
+    /**
+     * Change progress bar
+     * @param RSSI
+     */
+    private Runnable changeProgressBar = new Runnable(){
+        @Override
+        public void run() {
+            System.out.println("DRAWER: " + previousRSSI);
+            handler.postDelayed(this, interval);
+        }
+    };
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

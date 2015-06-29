@@ -3,12 +3,22 @@
     android:layout_height="match_parent"
     tools:context=".FullscreenActivity">
 
+    <!-- background -->
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:adjustViewBounds="true"
         android:src="@drawable/ocean_50p"
         android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:id="@+id/progress"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:background="#ffffff">
+    </LinearLayout>
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
