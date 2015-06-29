@@ -55,7 +55,7 @@
             android:keepScreenOn="true"
             android:textColor="#ffffff"
             android:textStyle="bold"
-            android:textSize="80sp"
+            android:textSize="75sp"
             android:gravity="center"
             android:shadowColor="#000000"
             android:shadowDx="3"
