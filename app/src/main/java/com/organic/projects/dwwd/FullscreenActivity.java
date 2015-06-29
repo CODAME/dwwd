@@ -67,8 +67,14 @@ public class FullscreenActivity extends Activity {
 
     private static String UNDER_WATER = "UNDER WATER";
     private static String OUTER_SPACE = "OUTER SPACE";
+    private static String FROZEN_TUNDRA = "FROZEN TUNDRA";
+    private static String SCORCHED_SANDS = "TOASTY SANDS";
     private Map<String, Drawable> locations;
+    private Map<String, Drawable> locationsCopy;
     private String currentLocation = UNDER_WATER;
+    private Object randomKey;
+
+    private Boolean newRandomNeeded = true;
 
     private final int interval = 10;
     private Handler handler = new Handler();
@@ -85,7 +91,12 @@ public class FullscreenActivity extends Activity {
 
         locations = new HashMap<String, Drawable>();
         locations.put(UNDER_WATER, getResources().getDrawable(R.drawable.ocean_50p));
-        locations.put(OUTER_SPACE, getResources().getDrawable(R.drawable.outer_space));
+        locations.put(OUTER_SPACE, getResources().getDrawable(R.drawable.space_50p));
+        locations.put(FROZEN_TUNDRA, getResources().getDrawable(R.drawable.snow_50p));
+        locations.put(SCORCHED_SANDS, getResources().getDrawable(R.drawable.desert_50p));
+        locationsCopy = new HashMap<String, Drawable>();
+        locationsCopy.putAll(locations);
+        locationsCopy.remove(currentLocation);
 
         Gimbal.setApiKey(this.getApplication(), "dde26c72-ea4c-411e-85f8-3f1ddb9c45dc");
 
@@ -138,6 +149,9 @@ public class FullscreenActivity extends Activity {
                     currentLocation = firstKey.toString();
                     mBackground.setImageDrawable(background);
                 }
+                locationsCopy = new HashMap<String, Drawable>();
+                locationsCopy.putAll(locations);
+                locationsCopy.remove(currentLocation);
             }
         });
     }
@@ -168,18 +182,11 @@ public class FullscreenActivity extends Activity {
                 width = ViewGroup.LayoutParams.MATCH_PARENT;
                 fullscreenContent.setText("ILLICIT TRANSACTION COMPLETE. \n\nNEXT STOP:");
 
-                HashMap<String, Drawable> locationsCopy = new HashMap<String, Drawable>();
-                locationsCopy.putAll(locations);
-                locationsCopy.remove(currentLocation);
-
-                System.out.println("HEY Length of locations " + locations.size());
-                System.out.println("HEY length of locationsCopy " + locationsCopy.size());
-
+                fullscreenContentBig.setText(randomKey.toString());
+            }else{
                 Random generator = new Random();
                 Object[] keys = locationsCopy.keySet().toArray();
-                Object randomKey = keys[generator.nextInt(keys.length)];
-
-                fullscreenContentBig.setText(randomKey.toString());
+                randomKey = keys[generator.nextInt(keys.length)];
             }
 
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, ViewGroup.LayoutParams.MATCH_PARENT);
