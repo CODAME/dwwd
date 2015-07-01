@@ -83,7 +83,7 @@ public class FullscreenActivity extends Activity {
     private Button mLocationToggle;
     private ImageView mBackground;
 
-    private static Integer requiredSignalStrength = 55;
+    private static Integer requiredSignalStrength = 70;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +174,7 @@ public class FullscreenActivity extends Activity {
             Integer width = 0;
             mProgress = (LinearLayout) findViewById(R.id.progress);
 
-            System.out.println("DRAWER: " + previousRSSI);
+            //System.out.println("DRAWER: " + previousRSSI);
             handler.postDelayed(this, interval);
 
             if (previousRSSI < requiredSignalStrength) {

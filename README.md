@@ -1,11 +1,10 @@
+# Drug Wars With Drones #
+
+A physical game with digital pieces!
 
 [![DWWD Gameplay Teaser](http://starpause.com/gfx/dwwd-space.gif)](https://instagram.com/p/4lY9QVlFn_/?taken-by=starpause)
 
 [Teaser video with sound =)](https://instagram.com/p/4lY9QVlFn_/?taken-by=starpause)
-
-# Drug Wars With Drones #
-
-A physical game with digital pieces!
 
 # Setup Instructions #
 
