@@ -83,7 +83,7 @@ public class FullscreenActivity extends Activity {
     private Button mLocationToggle;
     private ImageView mBackground;
 
-    private static Integer requiredSignalStrength = 70;
+    private static Integer requiredSignalStrength = 65;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +180,7 @@ public class FullscreenActivity extends Activity {
             if (previousRSSI < requiredSignalStrength) {
                 mLocationToggle.setVisibility(View.GONE);
                 width = ViewGroup.LayoutParams.MATCH_PARENT;
-                fullscreenContent.setText("ILLICIT TRANSACTION COMPLETE. \n\nNEXT STOP:");
+                fullscreenContent.setText("DELIVERY COMPLETE. \n\nNEXT STOP:");
 
                 fullscreenContentBig.setText(randomKey.toString());
             }else{
